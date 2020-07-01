@@ -5,7 +5,7 @@ Nodejs api for downloading video/audio from youtube with use of
 
 To setup this project, simply clone the project and move into the project folder.
 ```
-git clone https://github.com/VakeDomen/DC-sticky-notes.git
+git clone https://github.com/VakeDomen/YTDownloaderAPI.git
 ```
 First you need to setup the ```.env``` file for the project. Move into the ```YTDownloaderAPI``` directory and make a copy of ```.env.sample``` and rename it to ```.env```. Than open the file and specify the required values.
 
