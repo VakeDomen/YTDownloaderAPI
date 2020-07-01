@@ -1,5 +1,5 @@
 # YTDownloaderAPI
-Nodejs api for downloading video/audio from youtube with use of 
+Nodejs api for downloading video/audio from youtube with use of [ytdl-core](https://www.npmjs.com/package/ytdl-core).
 
 ## Setup
 
