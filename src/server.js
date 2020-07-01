@@ -2,19 +2,28 @@ const express = require('express');
 const cors = require('cors');
 const ytdl = require('ytdl-core');
 const app = express();
+const conf = require("./config");
+
+require('dotenv').config()
+if (!process.env.PORT) {
+    console.log("No port specified!");
+    process.exit(0);
+}
+
 app.use(cors());
 
-app.listen(4000, () => {
-    console.log('Server Works !!! At port 4000');
+app.listen(process.env.PORT, () => {
+    console.log('Server Works !!! At port ' + process.env.PORT);
 });
 app.get('/download', (req,res) => {
     const URL = req.query.URL;
     const videoOptions = {
-        quality:    req.query.quality || 'highestvideo',
-        filter:     req.query['type'] || 'audioonly',
+        quality:    checkQualityInput(req.query.quality) || 'highest',
+        filter:     checkTypeInput(req.query.type) || 'audioonly',
     }
     res.header('Content-Disposition', 'attachment; filename="video.mp4"');
     ytdl(URL, videoOptions).pipe(res);
+    
 });
 
 app.get("/help", (req, res) => {
@@ -33,25 +42,12 @@ app.get("/help", (req, res) => {
             {
                 key: 'type',
                 usage: '<url>/download?type=<type>',
-                values: [
-                    'audioandvideo',
-                    'video',
-                    'videoonly',
-                    'audio',
-                    'audioonly'    
-                ]
+                values: conf.types
             },
             {
                 key: 'quality',
                 usage: '<url>/download?quality=<quality>',
-                values: [
-                    'highest',
-                    'lowest',
-                    'highestaudio',
-                    'lowestaudio',
-                    'highestvideo',
-                    'lowestvideo' 
-                ]
+                values: conf.qualities
             },
         ]
     })
