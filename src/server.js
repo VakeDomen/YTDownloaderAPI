@@ -3,6 +3,7 @@ const cors = require('cors');
 const ytdl = require('ytdl-core');
 const app = express();
 const conf = require("./config");
+const sanitizer = require("./sanitizer");
 
 require('dotenv').config()
 if (!process.env.PORT) {
@@ -18,8 +19,8 @@ app.listen(process.env.PORT, () => {
 app.get('/download', (req,res) => {
     const URL = req.query.URL;
     const videoOptions = {
-        quality:    checkQualityInput(req.query.quality) || 'highest',
-        filter:     checkTypeInput(req.query.type) || 'audioonly',
+        quality:    sanitizer.checkQualityInput(req.query.quality) || 'highest',
+        filter:     sanitizer.checkTypeInput(req.query.type) || 'audioonly',
     }
     res.header('Content-Disposition', 'attachment; filename="video.mp4"');
     ytdl(URL, videoOptions).pipe(res);
