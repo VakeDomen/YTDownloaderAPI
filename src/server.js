@@ -12,7 +12,6 @@ if (!process.env.PORT) {
 }
 
 app.use(cors());
-
 app.listen(process.env.PORT, () => {
     console.log('Server Works !!! At port ' + process.env.PORT);
 });
@@ -23,10 +22,8 @@ app.get('/download', (req,res) => {
         filter:     sanitizer.checkTypeInput(req.query.type) || 'audioonly',
     }
     res.header('Content-Disposition', 'attachment; filename="video.mp4"');
-    ytdl(URL, videoOptions).pipe(res);
-    
+    ytdl(URL, videoOptions).pipe(res); 
 });
-
 app.get("/help", (req, res) => {
     res.send({
         query: {
@@ -52,4 +49,4 @@ app.get("/help", (req, res) => {
             },
         ]
     })
-})
+});
