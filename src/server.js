@@ -19,9 +19,10 @@ app.get('/download', (req,res) => {
     const URL = req.query.URL;
     const videoOptions = {
         quality:    sanitizer.checkQualityInput(req.query.quality) || 'highest',
-        filter:     sanitizer.checkTypeInput(req.query.type) || 'audioonly',
+        filter:     sanitizer.checkTypeInput(req.query.type) || 'audioandvideo',
     }
     res.header('Content-Disposition', 'attachment; filename="video.mp4"');
+    console.log("Attempting download...");
     ytdl(URL, videoOptions).pipe(res); 
 });
 app.get("/help", (req, res) => {
